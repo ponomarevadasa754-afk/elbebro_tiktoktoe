@@ -1,30 +1,3 @@
-def check_winner(board):
-    """Проверяет есть ли победитель"""
-    # Выигрышные комбинации
-    winning_combinations = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],  # горизонтали
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],  # вертикали
-        [0, 4, 8], [2, 4, 6]              # диагонали
-    ]
-    
-    for combo in winning_combinations:
-        if board[combo[0]] == board[combo[1]] == board[combo[2]] != " ":
-            return board[combo[0]]
-    return None
-
-def check_draw(board):
-    """Проверяет ничью"""
-    return " " not in board
-def restart_game():
-    """Спрашивает хочет ли игрок сыграть ещё"""
-    while True:
-        choice = input("Хочешь сыграть ещё раз? (y/n): ").lower()
-        if choice in ['y', 'н']:  # н - для русской раскладки
-            return True
-        elif choice in ['n', 'т']:  # т - для русской раскладки
-            return False
-        else:
-            print("Введи 'y' (да) или 'n' (нет)")
 def get_player_input(board, current_player):
     """Получает и проверяет ввод игрока"""
     while True:
@@ -73,29 +46,6 @@ def main():
             # Ход игрока
             position = get_player_input(board, current_player)
             board[position] = current_player
-            winner = check_winner(board)
-            if winner:
-                display_board(board)
-                print(f"🎉 Поздравляю! Игрок {winner} победил! 🎉")
-                game_over = True
-            # Проверка ничьи
-            elif check_draw(board):
-                display_board(board)
-                print("🤝 Ничья! Победила дружба! 🤝")
-                game_over = True
-            else:
-                # Смена игрока
-                current_player = "O" if current_player == "X" else "X"
-        
-        # Предложение сыграть ещё
-        if not restart_game():
-            print("Спасибо за игру! До встречи! 👋")
-            break
-        else:
-            print("\n" + "="*40)
-            print("НАЧИНАЕМ НОВУЮ ИГРУ!")
-            print("="*40)
-
 
 
 if __name__ == "__main__":
